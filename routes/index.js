@@ -12,11 +12,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-app.use(function(req, res, next) {
-    res.setHeader('Connection', 'close');
-    next();
-});
-
 router.get("/summoner/id=:id", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
