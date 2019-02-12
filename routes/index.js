@@ -53,7 +53,6 @@ router.get("/update-summoner/data=:data", (req, res) => {
         return res.json({success: true, code: 200, data: result})
         db.close();
       });
-      return res.json({success: false, code: 500, data: "Didnt make it"})
     });
 });
 
