@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(logger("dev"));
 
 app.use(function(req, res, next) {
-    res.setHeader('Connection', 'keep-alive');
+    res.setHeader('Connection', 'close');
     next();
 });
 
