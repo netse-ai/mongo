@@ -28,7 +28,7 @@ app.get("/summoner/id=:id", (req, res) => {
     });
 });
 
-app.post("/update-summoner/:data", (req, res) => {
+app.post("/update-summoner", (req, res) => {
   var obj = req.params.data
   console.log(obj)
   if (err) {

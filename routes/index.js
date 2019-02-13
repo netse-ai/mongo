@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(logger("dev"));
 
-app.get("/summoner/id=:id", (req, res) => {
+router.get("/summoner/id=:id", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
@@ -29,7 +29,7 @@ app.get("/summoner/id=:id", (req, res) => {
     });
 });
 
-app.use('/update-summoner/:data', (req, res, next) => {
+router.use('/update-summoner/:data', (req, res, next) => {
   console.log('Request URL:', req.originalUrl)
   next()
 }, function (req, res, next) {
@@ -38,7 +38,7 @@ app.use('/update-summoner/:data', (req, res, next) => {
 })
 
 
-app.post("/update-summoner/:data", (req, res) => {
+router.post("/update-summoner/:data", (req, res, next) => {
   var obj = req.params.data
   console.log(obj)
   if (err) {
@@ -99,7 +99,7 @@ app.post("/update-summoner/:data", (req, res) => {
 
 
 app.use("/api", router);
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+// app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 // MongoClient.connect(url, function(err, db) {
 //   if (err) throw err;
@@ -114,4 +114,4 @@ app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 // });
 
 
-// module.exports = router;
+module.exports = router;
