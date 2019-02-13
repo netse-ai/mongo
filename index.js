@@ -9,6 +9,33 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger("dev"));
 
+function cleanStringify(object) {
+  if (object && typeof object === 'object') {
+      object = copyWithoutCircularReferences([object], object);
+  }
+  return JSON.stringify(object);
+
+  function copyWithoutCircularReferences(references, object) {
+      var cleanObject = {};
+      Object.keys(object).forEach(function(key) {
+          var value = object[key];
+          if (value && typeof value === 'object') {
+              if (references.indexOf(value) < 0) {
+                  references.push(value);
+                  cleanObject[key] = copyWithoutCircularReferences(references, value);
+                  references.pop();
+              } else {
+                  cleanObject[key] = '###_Circular_###';
+              }
+          } else if (typeof value !== 'function') {
+              cleanObject[key] = value;
+          }
+      });
+      return cleanObject;
+  }
+}
+
+
 app.get("/summoner/id=:id", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
@@ -27,7 +54,9 @@ app.get("/summoner/id=:id", (req, res) => {
 });
 
 app.post("/update-summoner", (req, res) => {
-  console.log(res);
+
+  res = cleanStringify(res)
+  console.log(res)
   return res.json({success: true, code: 200, data: res})
 });
 
