@@ -30,31 +30,29 @@ app.get("/summoner/id=:id", (req, res) => {
 
 app.post("/update-summoner", (req, res) => {
   var obj = req.body
-  console.log(obj);
-  return res.json({success: true, code: 200, data: req.body})
-
-    // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-    //   if (err) throw err;
-    //   var dbo = db.db("lolinsight");
-    //   var summoner = {
-    //     $set:{
-    //       "date": new Date()
-    //     },
-    //     $push:{
-    //       "matches": {
-    //         $each: obj.matches,
-    //       }
-    //     },
-    //   }
-    //   var insert = {
-    //     "id":obj.accountId,
-    //   }
-    //   dbo.collection("summoners").updateOne({id: obj.accountId}, summoner, {upsert:true}, (err, result) => {
-    //     if (err) throw err;
-    //     return res.json({success: true, code: 200, data: result})
-    //     db.close();
-    //   });
-    // });
+  MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
+    if (err) throw err;
+    var dbo = db.db("lolinsight");
+    var summoner = {
+      $set:{
+        "date": new Date()
+      },
+      $push:{
+        "matches": {
+          $each: obj.matches,
+        }
+      },
+    }
+    var insert = {
+      "id":obj.accountId,
+    }
+    console.log(summoner);
+    dbo.collection("summoners").updateOne({id: obj.accountId}, summoner, {upsert:true}, (err, result) => {
+      if (err) throw err;
+      return res.json({success: true, code: 200, data: result})
+      db.close();
+    });
+  });
 });
 
 // router.get("/insert-summoner/id=:id", (req, res) => {
