@@ -31,9 +31,7 @@ router.get("/summoner/id=:id", (req, res) => {
 
 
 router.post("/update-summoner/:data", (req, res) => {
-  var obj = req.query
-  console.log(obj)
-  var obj = req.params
+  var obj = req.params.data
   console.log(obj)
   console.log(err);
   if (err) throw err;
