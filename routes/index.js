@@ -30,12 +30,13 @@ router.get("/summoner/id=:id", (req, res) => {
 });
 
 
-app.post("/update-summoner/data", (req, res) => {
+router.post("/update-summoner/data", (req, res) => {
   var obj = req.query
   console.log(obj)
   var obj = req.params
   console.log(obj)
   if (err) throw err;
+  console.log(err);
   return res.json({success: true, code: 200, data: result})
 
     // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
