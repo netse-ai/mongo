@@ -87,8 +87,6 @@ app.post("/update-summoner/:data", (req, res) => {
 //     });
 // });
 
-
-app.use("/api", router);
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
 // MongoClient.connect(url, function(err, db) {
