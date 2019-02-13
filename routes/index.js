@@ -29,47 +29,6 @@ router.get("/summoner/id=:id", (req, res) => {
     });
 });
 
-router.use('/update-summoner/:data', (req, res, next) => {
-  console.log('Request URL:', req.originalUrl)
-  next()
-}, function (req, res, next) {
-  console.log('Request Type:', req.method)
-  next()
-})
-
-
-router.post("/update-summoner/:data", (req, res, next) => {
-  var obj = req.params.data
-  console.log(obj)
-  if (err) {
-    console.log(err);
-    throw err;
-  }
-  return res.json({success: true, code: 200, data: result})
-
-    // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-    //   if (err) throw err;
-    //   var dbo = db.db("lolinsight");
-    //   var summoner = {
-    //     $set:{
-    //       "date": new Date()
-    //     },
-    //     $push:{
-    //       "matches": {
-    //         $each: obj.matches,
-    //       }
-    //     },
-    //   }
-    //   var insert = {
-    //     "id":obj.accountId,
-    //   }
-    //   dbo.collection("summoners").updateOne({id: obj.accountId}, summoner, {upsert:true}, (err, result) => {
-    //     if (err) throw err;
-    //     return res.json({success: true, code: 200, data: result})
-    //     db.close();
-    //   });
-    // });
-});
 
 // router.get("/insert-summoner/id=:id", (req, res) => {
 //     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {

@@ -29,7 +29,7 @@ app.get("/summoner/id=:id", (req, res) => {
 });
 
 app.post("/update-summoner", (req, res) => {
-  var obj = req
+  var obj = JSON.parse(req)
   console.log(req);
   return res.json({success: true, code: 200, data: res})
 
