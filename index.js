@@ -7,8 +7,8 @@ var url = "mongodb://localhost:27017/mydb";
 const API_PORT = 3000;
 const app = express();
 /* GET home page. */
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger("dev"));
 
 app.get("/summoner/id=:id", (req, res) => {
