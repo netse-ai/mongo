@@ -30,7 +30,7 @@ router.get("/summoner/id=:id", (req, res) => {
 });
 
 
-router.get("/update-summoner/data=:data", (req, res) => {
+router.post("/update-summoner", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
