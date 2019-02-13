@@ -19,6 +19,7 @@ app.get("/summoner/id=:id", (req, res) => {
       console.log(id);
       dbo.collection("summoners").find({id:id}).toArray((err, result) => {
         if (err) throw err;
+        console.log(result);
         if (result.length == 0){
           return res.json({success: false, code: 404, data: "not found"})
         }
@@ -26,6 +27,7 @@ app.get("/summoner/id=:id", (req, res) => {
         db.close();
       });
     });
+    return res.json({success: true, code: 200, data: result})
 });
 
 app.post("/update-summoner", (req, res) => {
