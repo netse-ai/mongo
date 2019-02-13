@@ -28,13 +28,11 @@ app.get("/summoner/id=:id", (req, res) => {
     });
 });
 
-app.post("/update-summoner", (req, res, err) => {
+app.post("/update-summoner", (req, res) => {
   var obj = req.params
   console.log(obj)
-  if (err) {
-    console.log(err);
-    throw err;
-  }
+  var obj = req.query
+  console.log(obj)
   return res.json({success: true, code: 200, data: result})
 
     // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
