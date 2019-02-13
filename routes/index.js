@@ -30,7 +30,7 @@ router.get("/summoner/id=:id", (req, res) => {
 });
 
 
-router.post("/update-summoner/data", (req, res) => {
+router.post("/update-summoner/:data", (req, res) => {
   var obj = req.query
   console.log(obj)
   var obj = req.params
