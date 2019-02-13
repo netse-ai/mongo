@@ -27,7 +27,6 @@ app.get("/summoner/id=:id", (req, res) => {
         db.close();
       });
     });
-    return res.json({success: true, code: 200, data: result})
 });
 
 app.post("/update-summoner", (req, res) => {
