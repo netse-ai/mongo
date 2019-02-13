@@ -34,7 +34,7 @@ router.post("/update-summoner/data", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
-      var obj = req.params.data
+      var obj = req.params
       console.log(obj)
       var summoner = {
         $set:{
