@@ -35,8 +35,8 @@ router.post("/update-summoner/data", (req, res) => {
   console.log(obj)
   var obj = req.params
   console.log(obj)
-  if (err) throw err;
   console.log(err);
+  if (err) throw err;
   return res.json({success: true, code: 200, data: result})
 
     // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
