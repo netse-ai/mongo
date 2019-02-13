@@ -8,8 +8,8 @@ const API_PORT = 3000;
 const app = express();
 const router = express.Router();
 /* GET home page. */
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(logger("dev"));
 
 router.get("/summoner/id=:id", (req, res) => {
