@@ -29,7 +29,20 @@ app.get("/summoner/id=:id", (req, res) => {
 });
 
 app.post("/update-summoner", (req, res) => {
-  var obj = req
+  const getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === "object" && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+  };
+
+  req = JSON.stringify(req, getCircularReplacer())
   console.log(req.body);
   return res.json({success: true, code: 200, data: res})
 
