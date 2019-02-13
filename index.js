@@ -30,6 +30,7 @@ app.get("/summoner/id=:id", (req, res) => {
 
 app.post("/update-summoner", (req, res) => {
   var obj = req.body
+  console.log(obj);
   return res.json({success: true, code: 200, data: req.body})
 
     // MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
