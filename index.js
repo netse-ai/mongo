@@ -17,7 +17,7 @@ app.get("/summoner/id=:id", (req, res) => {
       var dbo = db.db("lolinsight");
       var id = req.params.id;
       console.log(id);
-      dbo.collection("summoners").find({id:id}, (err, result) => {
+      dbo.collection("summoners").find({id:id}).toArray((err, result) => {
         if (err) throw err;
         console.log(result);
         if (result.length == 0){
