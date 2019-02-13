@@ -8,7 +8,7 @@ const API_PORT = 3000;
 const app = express();
 /* GET home page. */
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+// app.use(bodyParser.json());
 app.use(logger("dev"));
 
 app.get("/summoner/id=:id", (req, res) => {
@@ -29,7 +29,7 @@ app.get("/summoner/id=:id", (req, res) => {
 });
 
 app.post("/update-summoner", (req, res) => {
-  var obj = JSON.parse(req)
+  var obj = req
   console.log(req);
   return res.json({success: true, code: 200, data: res})
 
