@@ -29,6 +29,14 @@ router.get("/summoner/id=:id", (req, res) => {
     });
 });
 
+router.use('/update-summoner/:data', (req, res, next) => {
+  console.log('Request URL:', req.originalUrl)
+  next()
+}, function (req, res, next) {
+  console.log('Request Type:', req.method)
+  next()
+})
+
 
 router.post("/update-summoner/:data", (req, res) => {
   var obj = req.params.data
