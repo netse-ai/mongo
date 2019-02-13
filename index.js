@@ -27,6 +27,7 @@ app.get("/summoner/id=:id", (req, res) => {
 });
 
 app.post("/update-summoner", (req, res) => {
+  console.log(res);
   return res.json({success: true, code: 200, data: res})
 });
 
