@@ -28,8 +28,8 @@ app.get("/summoner/id=:id", (req, res) => {
     });
 });
 
-app.post("/update-summoner", (req, res) => {
-  var obj = req.params.data
+app.post("/update-summoner", (req, res, err) => {
+  var obj = req.params
   console.log(obj)
   if (err) {
     console.log(err);
