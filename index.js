@@ -46,7 +46,7 @@ app.post("/update-summoner", (req, res) => {
     }
     var insert = {
       "id":obj.accountId,
-      "summonrName": obj.summonerName
+      "summonerName": obj.summonerName
     }
     console.log(summoner);
     dbo.collection("summoners").updateOne({id: obj.accountId}, summoner, {upsert:true}, (err, result) => {
