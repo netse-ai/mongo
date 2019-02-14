@@ -11,13 +11,12 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger("dev"));
 
-app.get("/summoner/id=:id", (req, res) => {
+app.get("/summoner/name=:name", (req, res) => {
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
-      var id = req.params.id;
-      console.log(id);
-      dbo.collection("summoners").find({id:id}).toArray((err, result) => {
+      var name = req.params.name;
+      dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
         if (err) throw err;
         console.log(result);
         if (result.length == 0){
