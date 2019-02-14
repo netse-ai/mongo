@@ -42,6 +42,7 @@ app.post("/update-summoner", (req, res) => {
         }
       },
     }
+    console.log(new Date())
     var insert = {
       "id":obj.accountId,
       "summonerName": obj.summonerName
