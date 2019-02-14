@@ -18,7 +18,6 @@ app.get("/summoner/name=:name", (req, res) => {
       var name = req.params.name;
       dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
         if (err) throw err;
-        console.log(result);
         if (result.length == 0){
           return res.json({success: false, code: 404, data: "not found"})
         }
