@@ -16,6 +16,7 @@ app.get("/summoner/name=:name", (req, res) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
       var name = req.params.name;
+      name = name.toLowerCase()
       dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
         if (err) throw err;
         if (result.length == 0){
@@ -45,7 +46,7 @@ app.post("/update-summoner", (req, res) => {
     console.log(new Date())
     var insert = {
       "id":obj.accountId,
-      "summonerName": obj.summonerName
+      "summonerName": obj.summonerName.toLowerCase()
     }
     console.log(insert);
     dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
