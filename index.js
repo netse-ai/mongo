@@ -28,8 +28,10 @@ app.get("/summoner/name=:name", (req, res) => {
           db.close();
         });
       }
-      return res.json({success: false, code: 500})
-      db.close();
+      else{
+        return res.json({success: false, code: 500})
+        db.close();
+      }
     });
 });
 
