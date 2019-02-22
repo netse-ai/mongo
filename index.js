@@ -16,15 +16,21 @@ app.get("/summoner/name=:name", (req, res) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
       var name = req.params.name;
-      name = name.toLowerCase()
-      dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
-        if (err) throw err;
-        if (result.length == 0){
-          return res.json({success: false, code: 404, data: "not found"})
-        }
-        return res.json({success: true, code: 200, data: result})
+      if (name != undefined){
+        name = name.toLowerCase()
+        dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
+          if (err) throw err;
+          if (result.length == 0){
+            return res.json({success: false, code: 404, data: "not found"})
+          }
+          return res.json({success: true, code: 200, data: result})
+          db.close();
+        });
+      }
+      else{
+        return res.json({success: false, code: 500})
         db.close();
-      });
+      }
     });
 });
 
