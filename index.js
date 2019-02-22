@@ -23,14 +23,12 @@ app.get("/summoner/name=:name", (req, res) => {
           if (result.length == 0){
             return res.json({success: false, code: 404, data: "not found"})
           }
-          return res.json({success: true, code: 200, data: result})
           db.close();
+          return res.json({success: true, code: 200, data: result})
         });
       }
-      else{
-        return res.json({success: false, code: 500})
-        db.close();
-      }
+      db.close();
+      return res.json({success: false, code: 500})
     });
 });
 
