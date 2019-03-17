@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 app.use(logger("dev"));
 
 app.get("/summoner/name=:name", (req, res) => {
+  if (name != undefined){
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
@@ -33,35 +34,44 @@ app.get("/summoner/name=:name", (req, res) => {
         db.close();
       }
     });
+  }
+  else{
+    return res.json({success: false, code: 404})
+  }
 });
 
 app.post("/update-summoner", (req, res) => {
-  var obj = req.body
-  MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
-    if (err) throw err;
-    var dbo = db.db("lolinsight");
-    var summoner = {
-      $set:{
-        "date": new Date()
-      },
-      $push:{
-        "matches": {
-          $each: obj.matches,
-        }
-      },
-    }
-    console.log(new Date())
-    var insert = {
-      "id":obj.accountId,
-      "summonerName": obj.summonerName.toLowerCase()
-    }
-    console.log(insert);
-    dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
+  if (req.body != undefined){
+    var obj = req.body
+    MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
-      return res.json({success: true, code: 200, data: result})
-      db.close();
+      var dbo = db.db("lolinsight");
+      var summoner = {
+        $set:{
+          "date": new Date()
+        },
+        $push:{
+          "matches": {
+            $each: obj.matches,
+          }
+        },
+      }
+      console.log(new Date())
+      var insert = {
+        "id":obj.accountId,
+        "summonerName": obj.summonerName.toLowerCase()
+      }
+      console.log(insert);
+      dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
+        if (err) throw err;
+        return res.json({success: true, code: 200, data: result})
+        db.close();
+      });
     });
-  });
+  }
+  else {
+    return res.json({success: false, code: 404, data: {'result': 'not found'}})
+  }
 });
 
 // router.get("/insert-summoner/id=:id", (req, res) => {
