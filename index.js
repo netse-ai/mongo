@@ -12,8 +12,7 @@ app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 5
 app.use(logger("dev"));
 
 app.get("/summoner/name=:name", (req, res) => {
-  if (name != undefined){
-    console.log("update worked");
+  if (req.params.name != undefined){
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
