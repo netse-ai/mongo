@@ -13,6 +13,7 @@ app.use(logger("dev"));
 
 app.get("/summoner/name=:name", (req, res) => {
   if (name != undefined){
+    console.log("update worked");
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
       if (err) throw err;
       var dbo = db.db("lolinsight");
