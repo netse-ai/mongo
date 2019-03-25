@@ -27,7 +27,7 @@ app.get("/summoner/name=:name", (req, res) => {
             db.close();
           }
           let dedupeResult = _.uniqBy(result, 'gameId');
-          console.log("dedupeResult", dedupeResult[0].gameId, dedupeResult[1].gameId);
+          console.log("dedupeResult", dedupeResult[0].gameId);
           return res.json({success: true, code: 200, data: dedupeResult})
           db.close();
         });
