@@ -26,10 +26,9 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-          let dedupeResult = _.uniqBy(result, 'gameId');
-          console.log(result);
-          console.log("dedupeResult", dedupeResult.length);
-          return res.json({success: true, code: 200, data: dedupeResult})
+          let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
+          result[0].mathes = dedupeResult
+          return res.json({success: true, code: 200, data: result})
           db.close();
         });
       }
