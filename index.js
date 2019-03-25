@@ -3,6 +3,7 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var url = "mongodb://localhost:27017/mydb";
+var _ = require('lodash');
 
 const API_PORT = 3000;
 const app = express();
@@ -10,20 +11,6 @@ const app = express();
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger("dev"));
-
-function getUnique(arr, comp) {
-
-  const unique = arr
-       .map(e => e[comp])
-
-     // store the keys of the unique objects
-    .map((e, i, final) => final.indexOf(e) === i && i)
-
-    // eliminate the dead keys & store unique objects
-    .filter(e => arr[e]).map(e => arr[e]);
-
-   return unique;
-}
 
 app.get("/summoner/name=:name", (req, res) => {
   if (req.params.name != undefined){
@@ -39,7 +26,7 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-          let dedupeResult = getUnique(result);
+          let dedupeResult = _.uniqBy(data, 'timestamp');
           console.log("dedupeResult");
           return res.json({success: true, code: 200, data: dedupeResult})
           db.close();
@@ -80,8 +67,7 @@ app.post("/update-summoner", (req, res) => {
       console.log(insert);
       dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
         if (err) throw err;
-        let dedupeResult = getUnique(result);
-        return res.json({success: true, code: 200, data: dedupeResult})
+        return res.json({success: true, code: 200, data: result})
         db.close();
       });
     });
