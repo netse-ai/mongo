@@ -39,9 +39,7 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-
-          let dedupeResult = getUnique(result);
-          return res.json({success: true, code: 200, data: dedupeResult})
+          return res.json({success: true, code: 200, data: result})
           db.close();
         });
       }
@@ -80,7 +78,8 @@ app.post("/update-summoner", (req, res) => {
       console.log(insert);
       dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
         if (err) throw err;
-        return res.json({success: true, code: 200, data: result})
+        let dedupeResult = getUnique(result);
+        return res.json({success: true, code: 200, data: dedupeResult})
         db.close();
       });
     });
