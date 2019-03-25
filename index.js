@@ -11,6 +11,25 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger("dev"));
 
+function dedupe(arr) {
+  return arr.reduce(function (p, c) {
+
+    // create an identifying id from the object values
+    var id = [c.x, c.y].join('|');
+
+    // if the id is not found in the temp array
+    // add the object to the output array
+    // and add the key to the temp array
+    if (p.temp.indexOf(id) === -1) {
+      p.out.push(c);
+      p.temp.push(id);
+    }
+    return p;
+
+  // return the deduped array
+  }, { temp: [], out: [] }).out;
+}
+
 app.get("/summoner/name=:name", (req, res) => {
   if (req.params.name != undefined){
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
@@ -25,7 +44,11 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-          return res.json({success: true, code: 200, data: result})
+
+          let dedupeResult = dedupe(list);
+
+
+          return res.json({success: true, code: 200, data: dedupeResult})
           db.close();
         });
       }
