@@ -45,7 +45,7 @@ app.get("/summoner/name=:name", (req, res) => {
             db.close();
           }
 
-          let dedupeResult = dedupe(list);
+          let dedupeResult = dedupe(result);
 
 
           return res.json({success: true, code: 200, data: dedupeResult})
