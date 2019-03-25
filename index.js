@@ -26,7 +26,7 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-          let dedupeResult = _.uniqBy(data, 'timestamp');
+          let dedupeResult = _.uniqBy(result, 'timestamp');
           console.log("dedupeResult");
           return res.json({success: true, code: 200, data: dedupeResult})
           db.close();
