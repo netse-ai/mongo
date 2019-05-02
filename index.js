@@ -100,6 +100,7 @@ app.post("/update-summoner", (req, res) => {
         },
       }
       console.log(new Date())
+      console.log(obj.matches.length);
       var insert = {
         "id":obj.accountId,
         "summonerName": obj.summonerName.toLowerCase()
