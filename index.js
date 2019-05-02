@@ -26,7 +26,7 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: false, code: 404, data: "not found"})
             db.close();
           }
-          console.log(result[0].matches.length)
+          console.log('Length: ', result[0].matches.length)
           let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
           result[0].matches = dedupeResult
           if (dedupeResult.length >= 150){
