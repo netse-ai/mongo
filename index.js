@@ -12,6 +12,41 @@ app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
 app.use(logger("dev"));
 
+
+function roughSizeOfObject( object ) {
+
+    var objectList = [];
+    var stack = [ object ];
+    var bytes = 0;
+
+    while ( stack.length ) {
+        var value = stack.pop();
+
+        if ( typeof value === 'boolean' ) {
+            bytes += 4;
+        }
+        else if ( typeof value === 'string' ) {
+            bytes += value.length * 2;
+        }
+        else if ( typeof value === 'number' ) {
+            bytes += 8;
+        }
+        else if
+        (
+            typeof value === 'object'
+            && objectList.indexOf( value ) === -1
+        )
+        {
+            objectList.push( value );
+
+            for( var i in value ) {
+                stack.push( value[ i ] );
+            }
+        }
+    }
+    return bytes;
+}
+
 app.get("/summoner/name=:name", (req, res) => {
   if (req.params.name != undefined){
     MongoClient.connect(url, { useNewUrlParser: true }, (err, db) => {
@@ -27,6 +62,7 @@ app.get("/summoner/name=:name", (req, res) => {
             db.close();
           }
           console.log('Length: ', result[0].matches.length)
+          console.log('rough size: ', roughSizeOfObject(result[0].matches))
           let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
           result[0].matches = dedupeResult
           if (dedupeResult.length >= 150){
