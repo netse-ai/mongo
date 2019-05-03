@@ -65,10 +65,10 @@ app.get("/summoner/name=:name", (req, res) => {
           console.log('rough size: ', roughSizeOfObject(result[0].matches))
           let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
           result[0].matches = dedupeResult
-          // if (dedupeResult.length >= 150){
-          //   let diff = dedupeResult.length - 150;
-          //   dedupeResult = dedupeResult.slice(dedupeResult.length - (150+diff), dedupeResult.length)
-          // }
+          if (dedupeResult.length >= 50){
+            let diff = dedupeResult.length - 50;
+            dedupeResult = dedupeResult.slice(dedupeResult.length - 50, dedupeResult.length)
+          }
           return res.json({success: true, code: 200, data: result})
           db.close();
         });
