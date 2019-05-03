@@ -69,7 +69,7 @@ app.get("/summoner/name=:name", (req, res) => {
           //   let diff = dedupeResult.length - 50;
           //   dedupeResult = dedupeResult.slice(dedupeResult.length - 50, dedupeResult.length)
           // }
-          return res.json({success: true, code: 200, data: dedupeResult})
+          return res.json({success: true, code: 200, data: result})
           db.close();
         });
       }
