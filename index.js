@@ -73,7 +73,10 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: true, code: 200, data: result})
             db.close();
           }
-          return res.json({success: true, code: 200, data: result})
+          else{
+            return res.json({success: true, code: 200, data: result})
+            db.close();
+          }
           db.close();
         });
       }
