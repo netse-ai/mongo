@@ -64,22 +64,17 @@ app.get("/summoner/name=:name", (req, res) => {
           console.log('Length: ', result[0].matches.length)
           console.log('rough size: ', roughSizeOfObject(result[0].matches))
           let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
-          if (dedupeResult.length > 10){
-            console.log("greater than 10!");
-            let diff = dedupeResult.length - 10;
-            dedupeResult = dedupeResult.slice(diff, dedupeResult.length)
-            result[0].matches = dedupeResult
-            console.log(result[0].matches.length);
-            let dupeResult = result;
-            console.log(dupeResult[0].matches.length);
-            return res.json({success: true, code: 200, data: dupeResult})
-            db.close();
-          }
-          else{
-            console.log("not greater than 10")
-            return res.json({success: true, code: 200, data: result})
-            db.close();
-          }
+          // if (dedupeResult.length > 10){
+          //   console.log("greater than 10!");
+          //   let diff = dedupeResult.length - 10;
+          //   dedupeResult = dedupeResult.slice(diff, dedupeResult.length)
+          //   result[0].matches = dedupeResult
+          //   console.log(result[0].matches.length);
+          //   return res.json({success: true, code: 200, data: result})
+          //   db.close();
+          // }
+          return res.json({success: true, code: 200, data: result})
+          db.close();
         });
       }
       else{
