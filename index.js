@@ -70,7 +70,7 @@ app.get("/summoner/name=:name", (req, res) => {
             dedupeResult = dedupeResult.slice(diff, dedupeResult.length)
             result[0].matches = dedupeResult
             console.log(result[0].matches.length);
-            let res = result;
+            let dupeResult = result;
             console.log(res[0].matches.length);
             return res.json({success: true, code: 200, data: result})
             db.close();
