@@ -75,8 +75,11 @@ app.get("/summoner/name=:name", (req, res) => {
             return res.json({success: true, code: 200, data: dupeResult})
             db.close();
           }
-          return res.json({success: true, code: 200, data: result})
-          db.close();
+          else{
+            console.log("not greater than 10")
+            return res.json({success: true, code: 200, data: result})
+            db.close();
+          }
         });
       }
       else{
