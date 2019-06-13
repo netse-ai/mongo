@@ -64,13 +64,11 @@ app.get("/summoner/name=:name", (req, res) => {
           console.log('Length: ', result[0].matches.length)
           console.log('rough size: ', roughSizeOfObject(result[0].matches))
           let dedupeResult = _.uniqBy(result[0].matches, 'gameId');
-          if (dedupeResult.length >= 50){
-            // let diff = dedupeResult.length - 50;
-            dedupeResult = dedupeResult.slice(dedupeResult.length - 50, dedupeResult.length)
-          }
+          // if (dedupeResult.length >= 50){
+          //   let diff = dedupeResult.length - 50;
+          //   dedupeResult = dedupeResult.slice(dedupeResult.length - 50, dedupeResult.length)
+          // }
           result[0].matches = dedupeResult
-          console.log(dedupeResult.length);
-          console.log(result[0].matches.length);
           return res.json({success: true, code: 200, data: result})
           db.close();
         });
@@ -109,26 +107,6 @@ app.post("/update-summoner", (req, res) => {
         "summonerName": obj.summonerName.toLowerCase()
       }
       console.log(insert);
-
-
-
-      // dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
-      //   if (err) throw err;
-      //   if (result.length > 10){
-      //
-      //     let diff = result.length - 10;
-      //     let newResult = result.slice(diff, result.length);
-      //     console.log("newResult: ", newResult.length);
-      //     dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
-      //       if (err) throw err;
-      //       return res.json({success: true, code: 200, data: result})
-      //       db.close();
-      //     });
-      //   }
-      // });
-
-
-
       dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
         if (err) throw err;
         return res.json({success: true, code: 200, data: result})
