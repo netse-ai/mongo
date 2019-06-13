@@ -109,11 +109,24 @@ app.post("/update-summoner", (req, res) => {
         "summonerName": obj.summonerName.toLowerCase()
       }
       console.log(insert);
-      dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
+
+
+
+      dbo.collection("summoners").find({summonerName:name}).toArray((err, result) => {
         if (err) throw err;
-        return res.json({success: true, code: 200, data: result})
-        db.close();
+        if (result.length < 100){
+
+          let diff = 100 - result.length;
+          let newResult = result.slice(diff, result.length);
+          console.log("newResult: ", newResult.length);
+          dbo.collection("summoners").updateOne(insert, summoner, {upsert:true}, (err, result) => {
+            if (err) throw err;
+            return res.json({success: true, code: 200, data: result})
+            db.close();
+          });
+        }
       });
+
     });
   }
   else {
